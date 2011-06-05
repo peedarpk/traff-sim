@@ -21,11 +21,11 @@ public class BGPanel extends JPanel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(Color.RED);
 		g2d.setStroke(new BasicStroke(1));
-		g2d.drawOval(209, 111, 10, 10);
-		g2d.drawOval(589, 375, 10, 10);
+		g2d.drawOval(100, 100, 10, 10);
+		g2d.drawOval(500, 200, 10, 10);
 		
-		Point startPoint = new Point(209, 111);
-		Point endPoint = new Point(589, 375);
+		Point startPoint = new Point(100, 100);
+		Point endPoint = new Point(500, 200);
 		Double slope = ((endPoint.getX() - startPoint.getX()) / (endPoint.getY() - startPoint.getY()));
 		int count = 0;
 		while(count < 20){

@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ * @author peedarpk
+ */
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -19,7 +22,8 @@ import javax.swing.JPanel;
 import obj.Edge;
 import obj.Node;
 
-public class MapEditor extends JPanel implements MouseListener, MouseMotionListener {
+public class MapEditor extends JPanel implements MouseListener,
+		MouseMotionListener {
 
 	private static final long serialVersionUID = 7218471721638221815L;
 	public int panelWidth = 120;
@@ -56,11 +60,10 @@ public class MapEditor extends JPanel implements MouseListener, MouseMotionListe
 
 		Node endNode = nodesMatrix[end.x / TILE_SIZE][end.y / TILE_SIZE];
 
-		if(!startNode.equals(endNode)){
+		if (!startNode.equals(endNode)) {
 			Edge e = new Edge("e" + edgeCount, startNode, endNode);
 			return e;
 		}
-		
 
 		return null;
 	}
@@ -70,7 +73,7 @@ public class MapEditor extends JPanel implements MouseListener, MouseMotionListe
 		if (rightClick == false) {
 
 			Node n = new Node(e.getX(), e.getY(), "Node" + nodeCount);
-			if(nodesMatrix[n.getxBox()][n.getyBox()] == null){
+			if (nodesMatrix[n.getxBox()][n.getyBox()] == null) {
 				nodeCount++;
 				nodesList.add(n);
 				nodesMatrix[n.getxBox()][n.getyBox()] = n;
@@ -109,7 +112,9 @@ public class MapEditor extends JPanel implements MouseListener, MouseMotionListe
 		if (e.isPopupTrigger()) {
 			rightClick = true;
 			if (nodesMatrix[xBoxNo][yBoxNo] != null) {
-				popupMenu.setNodeAndPanel(this, nodesList, nodesMatrix[xBoxNo][yBoxNo], nodesMatrix, xBoxNo, yBoxNo, edgesList);
+				popupMenu.setNodeAndPanel(this, nodesList,
+						nodesMatrix[xBoxNo][yBoxNo], nodesMatrix, xBoxNo,
+						yBoxNo, edgesList);
 				popupMenu.show(this, e.getX(), e.getY());
 			}
 
@@ -132,7 +137,9 @@ public class MapEditor extends JPanel implements MouseListener, MouseMotionListe
 		if (e.isPopupTrigger()) {
 			rightClick = true;
 			if (nodesMatrix[xBoxNo][yBoxNo] != null) {
-				popupMenu.setNodeAndPanel(this, nodesList, nodesMatrix[xBoxNo][yBoxNo], nodesMatrix, xBoxNo, yBoxNo, edgesList);
+				popupMenu.setNodeAndPanel(this, nodesList,
+						nodesMatrix[xBoxNo][yBoxNo], nodesMatrix, xBoxNo,
+						yBoxNo, edgesList);
 				popupMenu.show(this, e.getX(), e.getY());
 			}
 		}
@@ -140,8 +147,8 @@ public class MapEditor extends JPanel implements MouseListener, MouseMotionListe
 
 			if (nodesMatrix[xBoxNo][yBoxNo] != null) {
 				Edge edge = makeEdge(startDrag, endDrag);
-				
-				if(edge != null){
+
+				if (edge != null) {
 					edgesList.add(edge);
 					edgeCount++;
 					startDrag = null;
@@ -164,48 +171,60 @@ public class MapEditor extends JPanel implements MouseListener, MouseMotionListe
 				g.drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 			}
 		}
-		
+
 		// Draw line on mouse drag
 		if (startDrag != null && endDrag != null) {
 			g2d.setPaint(Color.lightGray);
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g2d.setStroke(new BasicStroke(20));
-			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.80f));
+			g2d.setComposite(AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER, 0.80f));
 			g2d.drawLine(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
 		}
 		// Draw edges
 		for (Edge e : this.edgesList) {
 			g2d.setPaint(Color.LIGHT_GRAY);
 			g2d.setStroke(new BasicStroke(20));
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2d.drawLine(e.getStartNode().getxBox() * TILE_SIZE, e.getStartNode().getyBox() * TILE_SIZE, e.getEndNode()
-					.getxBox() * TILE_SIZE, e.getEndNode().getyBox() * TILE_SIZE);
-			
-//			g2d.setPaint(Color.LIGHT_GRAY);
-//			g2d.setStroke(new BasicStroke(16));
-//			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//			g2d.drawLine(e.getStartNode().getxBox() * TILE_SIZE, e.getStartNode().getyBox() * TILE_SIZE, e.getEndNode()
-//					.getxBox() * TILE_SIZE, e.getEndNode().getyBox() * TILE_SIZE);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.drawLine(e.getStartNode().getxBox() * TILE_SIZE, e
+					.getStartNode().getyBox() * TILE_SIZE, e.getEndNode()
+					.getxBox() * TILE_SIZE, e.getEndNode().getyBox()
+					* TILE_SIZE);
 
-			Point tip = new Point(e.getStartNode().getxBox() * TILE_SIZE, e.getStartNode().getyBox() * TILE_SIZE);
-			Point tail = new Point(e.getEndNode().getxBox() * TILE_SIZE, e.getEndNode().getyBox() * TILE_SIZE);
+			// g2d.setPaint(Color.LIGHT_GRAY);
+			// g2d.setStroke(new BasicStroke(16));
+			// g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+			// RenderingHints.VALUE_ANTIALIAS_ON);
+			// g2d.drawLine(e.getStartNode().getxBox() * TILE_SIZE,
+			// e.getStartNode().getyBox() * TILE_SIZE, e.getEndNode()
+			// .getxBox() * TILE_SIZE, e.getEndNode().getyBox() * TILE_SIZE);
+
+			Point tip = new Point(e.getStartNode().getxBox() * TILE_SIZE, e
+					.getStartNode().getyBox() * TILE_SIZE);
+			Point tail = new Point(e.getEndNode().getxBox() * TILE_SIZE, e
+					.getEndNode().getyBox() * TILE_SIZE);
 			Point middle = getCenterPoint(tip, tail);
 			g2d.setStroke(new BasicStroke(2));
 			drawArrowHead(g2d, middle, tip, Color.DARK_GRAY);
 			g2d.setPaint(Color.BLUE);
 			g2d.drawString(e.getName(), middle.x + 5, middle.y + 5);
 		}
-		
-		
+
 		// draw Nodes
 		for (Node n : this.nodesList) {
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g2d.setColor(Color.RED);
 			g2d.setStroke(new BasicStroke(1));
-			g2d.drawOval(n.getxBox() * TILE_SIZE, n.getyBox() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-			g2d.fillOval(n.getxBox() * TILE_SIZE, n.getyBox() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+			g2d.drawOval(n.getxBox() * TILE_SIZE, n.getyBox() * TILE_SIZE,
+					TILE_SIZE, TILE_SIZE);
+			g2d.fillOval(n.getxBox() * TILE_SIZE, n.getyBox() * TILE_SIZE,
+					TILE_SIZE, TILE_SIZE);
 			g2d.setPaint(Color.BLUE);
-			g2d.drawString(n.getName(), n.getxBox() * TILE_SIZE, n.getyBox() * TILE_SIZE);
+			g2d.drawString(n.getName(), n.getxBox() * TILE_SIZE, n.getyBox()
+					* TILE_SIZE);
 		}
 	}
 
